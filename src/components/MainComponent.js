@@ -12,6 +12,7 @@ import Footer from "./FooterComponent";
 import Home from "./HomeComponent";
 import {Switch, Route, Redirect} from "react-router-dom";
 import About from "./AboutComponent";
+import Signup from "./SignupComponent";
 import Login from "./LoginComponent";
 import Car from "./CarComponent";
 
@@ -26,9 +27,18 @@ class Main extends Component {
             leaders: LEADERS,
             currentBook: null,
             car: [],
-            accounts: []
+            accounts: [{
+                account:'admin',
+                password:'111111',
+                telnum:'111111',
+                email:'111111',
+                agree: true,
+            }],
+            onloginaccount: null
         };
-        this.addBookToCar=this.addBookToCar.bind(this);
+        this.addBookToCar = this.addBookToCar.bind(this);
+        this.addAccount = this.addAccount.bind(this);
+        this.checkAccount = this.checkAccount.bind(this);
     }
 
     addBookToCar(book) {
@@ -38,10 +48,36 @@ class Main extends Component {
 
     addAccount(account) {
         let newList = [...this.state.accounts, account];
-        this.setState({accounts: newList});
-        console.log(this.state.accounts);
-        alert(this.state.accounts);
-        return ("注册成功！");
+
+        this.setState({accounts: newList}, () => {
+            console.log('加载完成')
+            console.log(this.state.accounts);
+        });
+
+        alert("注册成功！");
+        //return ("注册成功！");
+    }
+
+    checkAccount(loacalaccount) {
+        if (this.state.accounts === undefined) {
+            alert("查找失败！");
+            return;
+        }
+        let local_accounts = this.state.accounts.filter((account) => account.account === loacalaccount.account && account.password === loacalaccount.password)
+        if (local_accounts.length === 0) {
+            alert("登陆失败！");
+
+            return;
+        }
+        else {
+            alert("登陆成功！");
+            this.setState({onloginaccount: local_accounts[0]});
+
+        }
+    }
+
+    buyBooks() {
+
     }
 
     render() {
@@ -64,14 +100,15 @@ class Main extends Component {
         };
         return (
             <div>
-                <Header/>
+                <Header onlogin = {this.state.onloginaccount}/>
                 <Switch>
                     <Route path="/home" component={HomePage} />
                     <Route exact path="/menu" component={() => <Menu books={this.state.books}/>}/>
                     <Route path="/menu/:bookId" component={BookWithId} />
                     <Route exact path="/contactus" component={Contact} />
-                    <Route exact path="/login" component={() => <Login accounts={this.state.accounts}/>}/>
-                    <Route exact path="/car" component={() => <Car car={this.state.car}/>}/>
+                    <Route exact path="/signup" component={() => <Signup accounts={this.state.accounts} addAccount = {this.addAccount}/>}/>
+                    <Route exact path="/login" component={() => <Login accounts={this.state.accounts} checkAccount = {this.checkAccount}/>}/>
+                    <Route exact path="/car" component={() => <Car car={this.state.car} buyBooks = {this.buyBooks}/>}/>
                     <Route exact path="/aboutus" component={() => <About leaders={this.state.leaders}/>}/>
                     <Redirect to="/home" />
                 </Switch>

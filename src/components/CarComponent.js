@@ -37,7 +37,17 @@ function RenderBookInCar({car}) {
             </Card>
         </div>
     );
-    else return renderedBooks;
+    else return (
+        <React.Fragment>
+            {renderedBooks}
+            <div key = "bookdescription" className="col-12 col-md-2 m-1">
+                <Link to={`/car/`} onClick={() => addBookToCar(book)}>
+                    <CardImg  object src="/assets/images/buy.png" alt="立即购买" />
+                </Link>
+            </div>
+
+        </React.Fragment>
+    );
 
 }
 

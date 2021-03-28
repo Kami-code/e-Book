@@ -18,7 +18,7 @@ function RenderLeader(props) {
             <Media>
                 <div className="col-12 col-md-2">
                 <Media left href="#">
-                    <Media object src={props.leader.image} alt="Generic placeholder image" />
+                    {/*<Media object src={props.leader.image} alt="Generic placeholder image" />*/}
                 </Media>
                 </div>
                 <Media body>
