@@ -19,7 +19,9 @@ class Header extends Component {
     }
 
     render() {
-        if (this.props.onlogin === null) {
+        let isAuthenticated =  !!sessionStorage.getItem("userName");
+        let isAdmin = !!sessionStorage.getItem("isAdmin");
+        if (!isAuthenticated) {
             return (
                 <React.Fragment>
                     <Navbar dark expand="md">
@@ -31,16 +33,6 @@ class Header extends Component {
                             </NavbarBrand>
                             <Collapse isOpen={this.state.isNavOpen} navbar>
                                 <Nav navbar>
-                                    <NavItem>
-                                        <NavLink className="nav-link" to="/home">
-                                            <span className="fa fa-home fa-lg"></span> 商城
-                                        </NavLink>
-                                    </NavItem>
-                                    <NavItem>
-                                        <NavLink className="nav-link" to="/menu">
-                                            <span className="fa fa-list fa-lg"></span> 书籍
-                                        </NavLink>
-                                    </NavItem>
                                     <NavItem>
                                         <NavLink className="nav-link" to="/login">
                                             <span className="fa fa-user-plus fa-lg"></span> 用户登陆
@@ -68,7 +60,7 @@ class Header extends Component {
                 </React.Fragment>
             );
         }
-        else {
+        else if (isAuthenticated && !isAdmin){
             return (
                 <React.Fragment>
                     <Navbar dark expand="md">
@@ -105,6 +97,11 @@ class Header extends Component {
                                             <span className="fa fa-address-card fa-lg"></span> 联系我们
                                         </NavLink>
                                     </NavItem>
+                                    <NavItem>
+                                        <NavLink className="nav-link" to="/login">
+                                            <span className="fa fa-user-plus fa-lg"></span> 切换账号
+                                        </NavLink>
+                                    </NavItem>
                                 </Nav>
                             </Collapse>
                         </div>
@@ -113,7 +110,7 @@ class Header extends Component {
                         <div className="container">
                             <div className="row row-header">
                                 <div className="col-12 col-sm-6">
-                                    <h1>欢迎用户: {this.props.onlogin.account}</h1>
+                                    <h1>欢迎用户: {sessionStorage.getItem("userName")}</h1>
                                     <p>我们致力于提供用户最佳的购书体验！相信我们，我们是专业的！</p>
                                 </div>
                             </div>
@@ -122,7 +119,46 @@ class Header extends Component {
                 </React.Fragment>
             );
         }
+        else if (isAuthenticated && isAdmin){
+            return (
+            <React.Fragment>
+                <Navbar dark expand="md">
+                    <div className="container">
+                        <NavbarToggler onClick={this.toggleNav} />
+                        <NavbarBrand className="mr-auto" href="/">
+                            <img src="assets/images/logo.png" height="30" width="41"
+                                 alt="" />
+                        </NavbarBrand>
+                        <Collapse isOpen={this.state.isNavOpen} navbar>
+                            <Nav navbar>
+                                <NavItem>
+                                    <NavLink className="nav-link" to="/adminmenu">
+                                        <span className="fa fa-address-card fa-lg"></span> 管理书籍
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink className="nav-link" to="/login">
+                                        <span className="fa fa-user-plus fa-lg"></span> 切换账号
+                                    </NavLink>
+                                </NavItem>
+                            </Nav>
+                        </Collapse>
+                    </div>
+                </Navbar>
+                <Jumbotron>
+                    <div className="container">
+                        <div className="row row-header">
+                            <div className="col-12 col-sm-6">
+                                <h1>欢迎用户: {sessionStorage.getItem("userName")}</h1>
+                                <p>我们致力于提供用户最佳的购书体验！相信我们，我们是专业的！</p>
+                            </div>
+                        </div>
+                    </div>
+                </Jumbotron>
+            </React.Fragment>
+        );
+        }
     }
 }
 
-export default Header
+export default Header;

@@ -31,7 +31,7 @@ function Home(props) {
                     <RenderFlash/>
                 </div>
             </div>
-            <h4>Home</h4>
+            {/*<h4>Home</h4>*/}
         </div>
     );
 }

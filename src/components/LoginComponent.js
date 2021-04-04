@@ -11,7 +11,7 @@ import {
     Form,
     FormGroup, Label, Col, Input, Button
 } from "reactstrap";
-import {Link} from "react-router-dom";
+import {Link, Redirect, withRouter} from "react-router-dom";
 
 class Login extends Component {
     constructor(props) {
@@ -38,9 +38,10 @@ class Login extends Component {
         event.preventDefault();
         // let result = this.props.accounts(this.state);
         let localstate = this.state;
-        this.props.checkAccount(localstate);
-        // console.log(result);
-        // alert(result);
+        let isSuccess = this.props.checkAccount(localstate);
+        if (isSuccess) {
+            this.props.history.push("/home");
+        }
     }
     render() {
         return (
@@ -84,4 +85,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default withRouter(Login);
