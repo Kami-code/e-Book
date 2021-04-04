@@ -9,9 +9,7 @@ function RenderBookInCar({car, buyCar}) {
                 <Card>
                     <Media>
                         <div className="col-12 col-md-2">
-                            <Media left href="#">
-                                <Media object src={book.image} alt={book.name} />
-                            </Media>
+                            <CardImg width="100%" object src={book.image} alt={book.name}/>
                         </div>
                         <div className="col-12 col-md-7 m-2">
                             <Media body>
