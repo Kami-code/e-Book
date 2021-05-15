@@ -82,6 +82,18 @@ public class orderController {
         return result;
     }
 
+    @RequestMapping(value = "/order/null")
+    public @ResponseBody
+    JSONArray nullHandler(){
+        return new JSONArray();
+    }
+
+    @RequestMapping(value = "/order/undefined")
+    public @ResponseBody
+    JSONArray undefinedHandler(){
+        return new JSONArray();
+    }
+
 //    @RequestMapping(value = "/order_item/{int}")
 //    public @ResponseBody
 //    List<Order_item> getOrderItems(@PathVariable("int") Long order_id){
