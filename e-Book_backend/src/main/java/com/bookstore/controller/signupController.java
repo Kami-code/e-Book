@@ -47,17 +47,19 @@ public class signupController {
 	public @ResponseBody JSONObject  logIn(HttpServletRequest request) throws Exception {
 		String username = request.getParameter("account");
 		String password = request.getParameter("password");
-		List<User> search_users = userRepo.findByUsernameAndPassword(username, password);
+		User search_user = userRepo.getUserByUsernameAndPassword(username, password);
+		System.out.println(search_user);
 		JSONObject result = new JSONObject();
-		if (search_users.size() == 0) {
+		if (search_user == null) {
 			result.put("result", "fail");
 			result.put("info", "Login failed! Please check username and password.");
 		}
 		else {
 			result.put("result", "success");
 			result.put("info", "Login success!");
-			result.put("username", search_users.get(0).getUsername());
-			result.put("user_type", search_users.get(0).getType());
+			result.put("username", search_user.getUsername());
+			result.put("user_type", search_user.getType());
+			result.put("user_id", search_user.getUser_id());
 		}
 		return result;
 	}
