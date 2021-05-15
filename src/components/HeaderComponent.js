@@ -19,7 +19,7 @@ class Header extends Component {
     }
 
     render() {
-        let isAuthenticated =  !!sessionStorage.getItem("userName");
+        let isAuthenticated =  !!sessionStorage.getItem("username");
         let isAdmin = !!sessionStorage.getItem("isAdmin");
         if (!isAuthenticated) {
             return (
@@ -88,6 +88,11 @@ class Header extends Component {
                                         </NavLink>
                                     </NavItem>
                                     <NavItem>
+                                        <NavLink className="nav-link" to="/order">
+                                            <span className="fa fa-recorder fa-lg"></span> 订单
+                                        </NavLink>
+                                    </NavItem>
+                                    <NavItem>
                                         <NavLink className="nav-link" to="/aboutus">
                                             <span className="fa fa-info fa-lg"></span> 关于我们
                                         </NavLink>
@@ -110,7 +115,7 @@ class Header extends Component {
                         <div className="container">
                             <div className="row row-header">
                                 <div className="col-12 col-sm-6">
-                                    <h1>欢迎用户: {sessionStorage.getItem("userName")}</h1>
+                                    <h1>欢迎用户: {sessionStorage.getItem("username")}</h1>
                                     <p>我们致力于提供用户最佳的购书体验！相信我们，我们是专业的！</p>
                                 </div>
                             </div>
@@ -137,6 +142,11 @@ class Header extends Component {
                                     </NavLink>
                                 </NavItem>
                                 <NavItem>
+                                    <NavLink className="nav-link" to="/adminAddBook">
+                                        <span className="fa fa-address-card fa-lg"></span> 添加书籍
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
                                     <NavLink className="nav-link" to="/login">
                                         <span className="fa fa-user-plus fa-lg"></span> 切换账号
                                     </NavLink>
@@ -149,7 +159,7 @@ class Header extends Component {
                     <div className="container">
                         <div className="row row-header">
                             <div className="col-12 col-sm-6">
-                                <h1>欢迎用户: {sessionStorage.getItem("userName")}</h1>
+                                <h1>欢迎用户: {sessionStorage.getItem("username")}</h1>
                                 <p>我们致力于提供用户最佳的购书体验！相信我们，我们是专业的！</p>
                             </div>
                         </div>

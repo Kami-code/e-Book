@@ -11,7 +11,6 @@ import {
     FormGroup, Label, Col, Input, Button, Form
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import {BOOKS} from "../shared/books";
 import {COMMENTS} from "../shared/comments";
 import {PROMOTIONS} from "../shared/promotions";
 import {LEADERS} from "../shared/leaders";

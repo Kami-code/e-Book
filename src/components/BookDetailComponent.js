@@ -2,7 +2,7 @@ import React from 'react';
 import {Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem} from 'reactstrap'
 import { Link } from 'react-router-dom'
 
-function RenderBook({book, addBookToCar}) {
+function RenderBook({book, addBookToCar, buyCar}) {
     return (
         <React.Fragment>
             <div key = "bookimage" className="col-12 col-md-5 m-1">
@@ -13,7 +13,11 @@ function RenderBook({book, addBookToCar}) {
             </div>
             <div key = "bookdescription" className="col-12 col-md-5 m-1">
                 <h1>{book.name}</h1>
-                <text>{book.description}</text>
+                <text>描述: {book.description}</text><br/>
+                <text>ISBN: {book.isbn}</text><br/>
+                <text>种类:  {book.type}</text><br/>
+                <text>作者: {book.author}</text><br/>
+                <text>库存: {book.inventory}</text><br/>
                 <br/><br/><br/>
                 <Card>
                     <CardBody>

@@ -12,6 +12,7 @@ import {
     FormGroup, Label, Col, Input, Button
 } from "reactstrap";
 import {Link} from "react-router-dom";
+import request from "./helper";
 
 class Signup extends Component {
     constructor(props) {
@@ -42,8 +43,30 @@ class Signup extends Component {
         // let result = this.props.accounts(this.state);
         let localstate = this.state;
         this.props.addAccount(localstate);
-        // console.log(result);
-        // alert(result);
+        console.log(localstate)
+        // request({
+        //     url:'/login',
+        //     method:'post',
+        //     data:localstate
+        // }).then(function(res){
+        //     console.log(res)
+        // })
+        let formData = new FormData();
+
+        formData.append('account', this.state.account);
+        formData.append('password', this.state.password);
+        formData.append('telnum', this.state.telnum);
+        formData.append('email', this.state.email);
+        console.log(formData);
+        fetch('http://localhost:9090/signup',{
+            method:'POST',
+            body:formData
+        })
+            .then(res =>res.json())
+            .then((data) => {
+                console.log(data)
+                })
+
     }
     render() {
         return (

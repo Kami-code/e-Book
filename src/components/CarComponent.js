@@ -2,8 +2,33 @@ import React, { Component } from "react";
 import {Card, CardBody, CardImg, CardText, CardTitle, Media} from "reactstrap";
 import {Link} from "react-router-dom";
 
-function RenderBookInCar({car, buyCar}) {
-    const renderedBooks = car.map((book) => {
+function RenderBookInCar({books, car}) {
+    function handleSubmit(event) {
+        event.preventDefault();
+        let result_string = JSON.stringify(car);
+        let searchParams = new URLSearchParams();
+        searchParams.append("cart_list", result_string);
+        searchParams.append("user_id", sessionStorage.getItem("user_id"));
+        fetch('http://localhost:9090/purchase/all',{
+            method:'POST',
+            body:searchParams
+        })
+            .then(res =>res.json())
+            .then((data) => {
+                console.log(data);
+                alert("购买成功！");
+            })
+    }
+
+    function inCart(book, car) {
+        let len = car.length;
+        for (let i = 0; i < len; i++) {
+            if (book.id === car[i].id) return true;
+        }
+        return false;
+    }
+    const book_filtered = books.filter((book) => inCart(book, car));
+    const renderedBooks = book_filtered.map((book) => {
         return (
             <div key = "bookimage" className="col-12 col-md-12">
                 <Card>
@@ -39,7 +64,7 @@ function RenderBookInCar({car, buyCar}) {
         <React.Fragment>
             {renderedBooks}
             <div key = "bookdescription" className="col-12 col-md-2 m-1">
-                <Link to={`/car/`} onClick={buyCar}>
+                <Link to={`/car/`} onClick={handleSubmit}>
                     <CardImg  object src="/assets/images/buy.png" alt="立即购买" />
                 </Link>
             </div>
@@ -66,8 +91,8 @@ class Car extends Component{
         return (
             <React.Fragment>
                 <div className="container">
-                    <RenderBookInCar car={car} buyCar={this.props.buyCar}/>
-                    <div key = "bookimage" className="col-12 col-md-12">
+                    <RenderBookInCar books = {this.props.books} car={car} />
+                    <div key = "bookTotalPrice" className="col-12 col-md-12">
                         <Card>
                             <CardTitle>共{car.length}本 总价为{totalPrice} </CardTitle>
                         </Card>

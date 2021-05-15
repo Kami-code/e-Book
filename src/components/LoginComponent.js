@@ -36,12 +36,26 @@ class Login extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        // let result = this.props.accounts(this.state);
-        let localstate = this.state;
-        let isSuccess = this.props.checkAccount(localstate);
-        if (isSuccess) {
-            this.props.history.push("/home");
-        }
+        let formData = new FormData();
+        formData.append('account', this.state.account);
+        formData.append('password', this.state.password);
+        console.log(formData);
+        fetch('http://localhost:9090/login',{
+            method:'POST',
+            body:formData
+        })
+            .then(res =>res.json())
+            .then((data) => {
+                console.log(data)
+                if (data.result === 'success') {
+                    sessionStorage.setItem("username", this.state.account);
+                    sessionStorage.setItem("user_id", data.user_id);
+                    if (data.user_type === 2) sessionStorage.setItem("isAdmin", "true");
+                    else sessionStorage.removeItem("isAdmin");
+                    this.props.history.push("/home");
+                }
+            })
+
     }
     render() {
         return (

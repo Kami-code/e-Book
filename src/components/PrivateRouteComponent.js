@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 //私有路由，只有登录的用户才能访问
 class PrivateRoute extends Component{
     componentWillMount(){
-        let isAuthenticated =  !!sessionStorage.getItem("userName");
+        let isAuthenticated =  !!sessionStorage.getItem("username");
         let isAdmin = !!sessionStorage.getItem("isAdmin");
         this.setState({isAuthenticated:isAuthenticated});
         this.setState({isAdmin:isAdmin});
