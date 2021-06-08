@@ -13,6 +13,10 @@ public class User {
     private Long userid;
     private String username;
     private String password;
+    private String email;
+    private String telnum;
+    @Column(name= "is_blocked")
+    private int isBlocked;
     @Column(name="user_type")
     private int usertype;
 
@@ -20,6 +24,21 @@ public class User {
 
     }
 
+    public User(String username, String password, String email, String telnum, int usertype, int isBlocked) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.telnum = telnum;
+        this.usertype = usertype;
+        this.isBlocked = isBlocked;
+    }
+
+    public int getIsBlocked() {
+        return isBlocked;
+    }
+    public void setIsBlocked(int isBlocked) {
+        this.isBlocked = isBlocked;
+    }
     public void setUsername(String username) {
         this.username = username;
     }
@@ -45,5 +64,17 @@ public class User {
         this.usertype = usertype;
     }
     public UserDto toUserDto() { return new UserDto(this); }
+    public String getEmail() {
+        return email;
+    }
+    public String getTelnum() {
+        return telnum;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public void setTelnum(String telnum) {
+        this.telnum = telnum;
+    }
 }
 

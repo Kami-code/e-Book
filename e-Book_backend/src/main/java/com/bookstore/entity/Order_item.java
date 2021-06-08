@@ -1,8 +1,11 @@
 package com.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Table(name = "order_item")
 @Entity
@@ -14,14 +17,15 @@ public class Order_item {
     @Column(name  = "item_cnt")
     private int itemcnt;
     @Column(name = "item_price")
-    private double itemprice;
+    private BigDecimal itemprice;
     @Column(name = "discount_money")
-    private double discountmoney;
+    private BigDecimal discountmoney;
     @Column(name = "total_money")
-    private double totalmoney;
+    private BigDecimal totalmoney;
 
     @OneToOne(targetEntity = Book.class,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id",referencedColumnName = "id")
+    @NotFound(action= NotFoundAction.IGNORE)
     private Book book;
 
 //    @ManyToOne(targetEntity = Order_master.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -31,7 +35,7 @@ public class Order_item {
     @JoinColumn(name="order_id")
     private Order_master orderMaster;
 
-    public Order_item(Book b, int c, double p, double d, double t, Order_master o) {
+    public Order_item(Book b, int c, BigDecimal p, BigDecimal d, BigDecimal t, Order_master o) {
         book = b;
         itemcnt = c;
         itemprice = p;
@@ -50,7 +54,7 @@ public class Order_item {
     public void setOrderitemid(Long orderitemid) {
         this.orderitemid = orderitemid;
     }
-    public void setDiscountmoney(double discountmoney) {
+    public void setDiscountmoney(BigDecimal discountmoney) {
         this.discountmoney = discountmoney;
     }
     public void setItemcnt(int itemcnt) {
@@ -59,20 +63,20 @@ public class Order_item {
     public void setBook(Book book) {
         this.book = book;
     }
-    public void setItemprice(double itemprice) {
+    public void setItemprice(BigDecimal itemprice) {
         this.itemprice = itemprice;
     }
     @JsonBackReference
     public void setOrderMaster(Order_master orderMaster) {
         this.orderMaster = orderMaster;
     }
-    public void setTotalmoney(double totalmoney) {
+    public void setTotalmoney(BigDecimal totalmoney) {
         this.totalmoney = totalmoney;
     }
-    public double getDiscountmoney() {
+    public BigDecimal getDiscountmoney() {
         return discountmoney;
     }
-    public double getItemprice() {
+    public BigDecimal getItemprice() {
         return itemprice;
     }
     public int getItemcnt() {
@@ -81,7 +85,7 @@ public class Order_item {
     public Book getBook() {
         return book;
     }
-    public double getTotalmoney() {
+    public BigDecimal getTotalmoney() {
         return totalmoney;
     }
     @JsonBackReference

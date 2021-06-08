@@ -15,4 +15,5 @@ public interface OrderDao {
     Order_master save(Order_master orderMaster);
     List<Order_master> getOrder_mastersByUserDto(User user);
     List<Order_master> getOrder_mastersByDate(Date startDate, Date endDate);
+    List<Order_master> getOrder_mastersByDateAndUser(Date startDate, Date endDate, User user);
 }

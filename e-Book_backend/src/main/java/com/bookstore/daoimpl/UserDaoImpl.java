@@ -7,6 +7,9 @@ import com.bookstore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Repository
 public class UserDaoImpl implements UserDao {
     @Autowired
@@ -28,5 +31,40 @@ public class UserDaoImpl implements UserDao {
             return null;
         }
         return user.toUserDto();
+    }
+    @Override
+    public UserDto getUserDtoByUsername(String username) {
+        User user = userRepository.getUserByUsername(username);
+        if (user == null) {
+            return null;
+        }
+        return user.toUserDto();
+    }
+    @Override
+    public UserDto saveByUser(User user) {
+        return userRepository.save(user).toUserDto();
+    }
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+    @Override
+    public List<UserDto> getAllUserDtos() {
+        List<UserDto> userDtos = new ArrayList<>();
+        List<User> users = userRepository.findAll();
+        for (int i = 0; i < users.size(); ++i) {
+            userDtos.add(users.get(i).toUserDto());
+        }
+        return userDtos;
+    }
+
+    @Override
+    public UserDto setBlockedStatus(Long userid, int status) {
+        User user = userRepository.getUserByUserid(userid);
+        if (user == null) {
+            return null;
+        }
+        user.setIsBlocked(status);
+        return userRepository.save(user).toUserDto();
     }
 }

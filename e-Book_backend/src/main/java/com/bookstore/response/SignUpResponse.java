@@ -5,7 +5,7 @@ import com.bookstore.dto.UserDto;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LogInResponse {
+public class SignUpResponse {
     private Map<String, Object> info = null;
 
     public Map<String, Object> getInfo() {
@@ -15,17 +15,17 @@ public class LogInResponse {
         this.info = info;
     }
 
-    public LogInResponse() {
+    public SignUpResponse() {
         info = new HashMap<>();
     }
 
-    public LogInResponse setSuccess(UserDto userDto) {
+    public SignUpResponse setSuccess(UserDto userDto) {
         info.put("result", "success");
         info.put("user", userDto);
         return this;
     }
 
-    public LogInResponse setFail(String message) {
+    public SignUpResponse setFail(String message) {
         info.put("result", "fail");
         info.put("message", message);
         return this;

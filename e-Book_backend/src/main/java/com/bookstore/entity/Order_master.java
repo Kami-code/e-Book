@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.*;
 
 @Table(name = "order_master")
@@ -15,7 +16,7 @@ public class Order_master implements Serializable {
     @Id
     @Column(name="order_master_id")
     private Long orderid;
-    private double payment;
+    private BigDecimal payment;
     private int method;
 
     @OneToOne(targetEntity = User.class,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -33,12 +34,12 @@ public class Order_master implements Serializable {
     public Order_master() {
     }
 
-    public Order_master(double payment, int method, User user) {
+    public Order_master(BigDecimal payment, int method, User user) {
         this.payment = payment;
         this.method  = method;
         this.user = user;
     }
-    public double getPayment() {
+    public BigDecimal getPayment() {
         return payment;
     }
     public int getMethod() {
@@ -47,7 +48,7 @@ public class Order_master implements Serializable {
     public void setMethod(int method) {
         this.method = method;
     }
-    public void setPayment(double payment) {
+    public void setPayment(BigDecimal payment) {
         this.payment = payment;
     }
     public void setOrderid(Long orderid) {

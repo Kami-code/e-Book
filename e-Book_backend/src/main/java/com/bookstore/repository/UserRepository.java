@@ -12,4 +12,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     public List<User> getUsersByUsername(String n);
     public User getUserByUsernameAndPassword(String username, String password);
     public User getUserByUserid(Long n);
+    public User getUserByUsername(String n);
+    @Override
+    public List<User> findAll();
 }

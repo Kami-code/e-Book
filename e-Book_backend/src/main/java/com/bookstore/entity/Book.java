@@ -9,25 +9,24 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-    private String isbn;
     private String name;
-    private String type;
     private String author;
     private BigDecimal price;
-    private String description;
     private int inventory;
+    private String description;
+    private String type;
     private String image;
+    private String isbn;
 
-
-    public Book(String a, String n, String t, BigDecimal p, String de, int in, String im) {
-        isbn = a;
-        name = n;
-        type = t;
-        author = t;
-        price = p;
-        description = de;
-        inventory = in;
-        image = im;
+    public Book(String name, String author, BigDecimal price, int inventory, String description, String type, String image, String isbn) {
+        this.name = name;
+        this.author = author;
+        this.price = price;
+        this.inventory = inventory;
+        this.description = description;
+        this.type = type;
+        this.image = image;
+        this.isbn = isbn;
     }
 
     public Book() {

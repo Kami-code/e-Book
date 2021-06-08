@@ -28,31 +28,55 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class BookController {
-	@Autowired
-	private BookRepository bookRepo;
-
 	@Autowired
 	private BookService bookService;
 
-	@CrossOrigin(origins = "*", maxAge = 3600)
 	@RequestMapping(value = "/books")
 	public @ResponseBody List<Book> getAllBooks() throws Exception {
 		return bookService.getBooks();
 	}
-	@RequestMapping(value = "/book/inventory/{bookid}", method = RequestMethod.POST)
+	@RequestMapping(value = "/book/{bookid}/inventory", method = RequestMethod.POST)
 	public @ResponseBody Book changeInventory(@PathVariable("bookid") Long book_id, @RequestParam("inventory") int inventory) throws Exception {
 		return bookService.changeInventory(book_id, inventory);
 	}
-	@RequestMapping(value = "/book/price/{bookid}", method = RequestMethod.POST)
+	@RequestMapping(value = "/book/{bookid}/price", method = RequestMethod.POST)
 	public @ResponseBody Book changePrice(@PathVariable("bookid") Long book_id, @RequestParam("price") BigDecimal price) throws Exception {
-		Book local_book = bookRepo.getBookById(book_id);
-		BigDecimal threshold = new BigDecimal("0.0");
-		if (local_book == null || price.compareTo(threshold) < 0) {
-			return null;
-		}
-		local_book.setPrice(price);
-		local_book = bookRepo.save(local_book);
-		return local_book;
+		return bookService.changePrice(book_id, price);
 	}
+	@RequestMapping(value = "/book/{bookid}/author", method = RequestMethod.POST)
+	public @ResponseBody Book changeAuthor(@PathVariable("bookid") Long book_id, @RequestParam("author") String author) throws Exception {
+		return bookService.changeAuthor(book_id, author);
+	}
+	@RequestMapping(value = "/book/{bookid}/description", method = RequestMethod.POST)
+	public @ResponseBody Book changeDescription(@PathVariable("bookid") Long book_id, @RequestParam("description") String description) throws Exception {
+		return bookService.changeDescription(book_id, description);
+	}
+	@RequestMapping(value = "/book/{bookid}/isbn", method = RequestMethod.POST)
+	public @ResponseBody Book changeISBN(@PathVariable("bookid") Long book_id, @RequestParam("isbn") String isbn) throws Exception {
+		return bookService.changeISBN(book_id, isbn);
+	}
+	@RequestMapping(value = "/book/{bookid}/name", method = RequestMethod.POST)
+	public @ResponseBody Book changeName(@PathVariable("bookid") Long book_id, @RequestParam("name") String name) throws Exception {
+		return bookService.changeName(book_id, name);
+	}
+	@RequestMapping(value = "/book/add", method = RequestMethod.POST)
+	public @ResponseBody Book changeName(@RequestParam("name") String name,
+										 @RequestParam("author") String author,
+										 @RequestParam("image") String image,
+										 @RequestParam("price") BigDecimal price,
+										 @RequestParam("inventory") int inventory,
+										 @RequestParam("isbn") String isbn,
+										 @RequestParam("description") String description,
+										 @RequestParam("type") String type) throws Exception {
+		return bookService.addBook(name, author, price, inventory, description, type, image, isbn);
+	}
+
+	@RequestMapping(value = "/book/{bookId}/delete", method = RequestMethod.GET)
+	public @ResponseBody String delete(@PathVariable("bookId") Long book_id) throws Exception {
+		bookService.delete(book_id);
+		return "success";
+	}
+
 }

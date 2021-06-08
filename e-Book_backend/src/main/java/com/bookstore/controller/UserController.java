@@ -21,45 +21,63 @@ import com.bookstore.dto.UserDto;
 import com.bookstore.repository.UserRepository;
 import com.bookstore.entity.User;
 import com.bookstore.response.LogInResponse;
+import com.bookstore.response.SignUpResponse;
 import com.bookstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
-
-import com.alibaba.fastjson.JSONObject;
+import java.util.List;
 
 
 @RestController
 public class UserController {
 	@Autowired
-	private UserRepository userRepository;
-	@Autowired
 	private UserService userService;
 
 	@CrossOrigin(origins = "*", maxAge = 3600)
-	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public @ResponseBody User signUp(HttpServletRequest request) throws Exception {
-		String account = request.getParameter("account");
-		String password = request.getParameter("password");
-		User user = new User();
-		user.setUsername(account);
-		user.setPassword(password);
-		user.setUsertype(1);
-		userRepository.save(user);
-		return user;
+	@RequestMapping(value = "/user/signup", method = RequestMethod.POST)
+	public @ResponseBody
+	SignUpResponse SignUp(@RequestParam("account") String username, @RequestParam("password") String password, @RequestParam("telnum") String telnum, @RequestParam("email") String email) throws Exception {
+		SignUpResponse response = new SignUpResponse();
+		try {
+			UserDto userDto = userService.SignUp(username, password, telnum, email);
+			response.setSuccess(userDto);
+		}
+		catch (Exception e) {
+			response.setFail(e.getMessage());
+		}
+		return response;
 	}
 
 	@CrossOrigin(origins = "*", maxAge = 3600)
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public @ResponseBody LogInResponse  logIn(@RequestParam("account") String username, @RequestParam("password") String password) throws Exception {
-		UserDto userDto = userService.LogIn(username, password);
+	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
+	public @ResponseBody
+	LogInResponse  LogIn(@RequestParam("account") String username, @RequestParam("password") String password) throws Exception {
 		LogInResponse response = new LogInResponse();
-		if (userDto == null) {
-			return response.setFail();
+		try {
+			UserDto userDto = userService.LogIn(username, password);
+			response.setSuccess(userDto);
 		}
-		else {
-			return response.setSuccess(userDto);
+		catch (Exception e) {
+			response.setFail(e.getMessage());
 		}
+		return response;
+	}
+
+	@CrossOrigin(origins = "*", maxAge = 3600)
+	@RequestMapping(value = "/user/get/all", method = RequestMethod.GET)
+	public @ResponseBody
+	List<UserDto> GetAll() throws Exception {
+		List<UserDto> userDto = userService.GetAll();
+		return userDto;
+	}
+
+	@CrossOrigin(origins = "*", maxAge = 3600)
+	@RequestMapping(value = "/user/{userid}/status", method = RequestMethod.POST)
+	public @ResponseBody
+	UserDto ChangeBlock(@PathVariable("userid") Long userid, @RequestParam("status") int status) throws Exception {
+		UserDto userDto = userService.ChangeBlockedStatus(userid, status);
+		return userDto;
 	}
 
 }

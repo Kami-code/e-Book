@@ -15,4 +15,5 @@ public interface OrderMasterRepository extends CrudRepository<Order_master, Long
     public List<Order_master> getOrder_mastersByUser(User user);
     public Order_master getOrder_masterByOrderid(Long id);
     public List<Order_master> findOrder_mastersByCreatetimeBetweenOrderByCreatetimeDesc(Date startDate, Date endDate);
+    public List<Order_master> findOrder_mastersByUserAndCreatetimeBetweenOrderByCreatetimeDesc(User user, Date startDate, Date endDate);
 }

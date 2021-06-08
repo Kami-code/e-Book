@@ -2,11 +2,14 @@ package com.bookstore.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.bookstore.entity.Order_master;
+import com.bookstore.response.StaticsResponse;
 import com.bookstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -37,6 +40,13 @@ public class OrderController {
     public @ResponseBody
     JSONArray undefinedHandler(){
         return new JSONArray();
+    }
+
+    @RequestMapping(value = "/order/{userid}", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Order_master> getOrdersByUserIdAndTime(@RequestParam("startDate") Date startDate, @RequestParam("endDate") Date endDate, @PathVariable("userid") Long userid) throws Exception {
+        List<Order_master> res = orderService.queryOrdersByUserid(startDate, endDate, userid);
+        return res;
     }
 
 }

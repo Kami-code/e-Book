@@ -13,4 +13,5 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     public Book getBookById(Long id);
     @Override
     public List<Book> findAll();
+    public void deleteBookById(Long id);
 }

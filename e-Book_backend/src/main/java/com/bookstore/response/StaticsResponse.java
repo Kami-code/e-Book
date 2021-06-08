@@ -1,6 +1,7 @@
 package com.bookstore.response;
 
 import com.bookstore.dto.UserDto;
+import com.bookstore.entity.Book;
 import com.bookstore.entity.Order_master;
 
 import java.util.ArrayList;
@@ -49,10 +50,15 @@ public class StaticsResponse {
             for (int j = 0; j < orders.get(i).getOrderItemSet().size(); j++) {
                 Map<String, Object> local_info = new HashMap<>();
                 local_info.put("createtime", orders.get(i).getCreatetime());
-                local_info.put("book", orders.get(i).getOrderItemSet().get(j).getBook().getName());
+                Book book = orders.get(i).getOrderItemSet().get(j).getBook();
+                if (book != null) {
+                    local_info.put("book", book.getName());
+                }
+                else {
+                    local_info.put("book", "已下架书籍");
+                }
                 local_info.put("count", orders.get(i).getOrderItemSet().get(j).getItemcnt());
                 book_info.add(local_info);
-//                System.out.println(local_info);
             }
 
         }

@@ -27,4 +27,8 @@ public class OrderDaoImpl implements OrderDao {
     public List<Order_master> getOrder_mastersByDate(Date startDate, Date endDate) {
         return orderMasterRepository.findOrder_mastersByCreatetimeBetweenOrderByCreatetimeDesc(startDate, endDate);
     }
+    @Override
+    public List<Order_master> getOrder_mastersByDateAndUser(Date startDate, Date endDate, User user) {
+        return orderMasterRepository.findOrder_mastersByUserAndCreatetimeBetweenOrderByCreatetimeDesc(user, startDate, endDate);
+    }
 }
