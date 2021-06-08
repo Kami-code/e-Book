@@ -28,7 +28,7 @@
    ## Maintainers And Contributors.
 
    [@Kami-code](https://github.com/Kami-code).
-   [@Teaching staffs of SE2321]
+   [@Teaching staffs of SE2321](http://www.se.sjtu.edu.cn/).
 
    ## Contributing
 
