@@ -2,13 +2,11 @@
 
    [![e-Book](https://img.shields.io/badge/e--Book-Completed-brightgreen)](https://github.com/Kami-code/e-Book)
 
-   A standard style for README files
-
-   This is a course project from SE2321 of SJTU. In summary, the project realize a online bookstore with React, Spring Boot And MySQL.
+   This is a course project from SE2321 of SJTU. In summary, the project realizes an online bookstore with React, Spring Boot, and MySQL.
 
    This repository contains:
 
-   1. [README.md](READ.md) to discribe the whole project.
+   1. [README.md](READ.md) to describe the whole project.
    2. [The frontend of e-Book](e-Book_frontend/) contains the frontend codes.
    3. [The backend of e-Book](e-Book_backend/) contains the backend codes.
    4. [The SQL scripts of e-Book] (plan to be updated soon!)
@@ -23,7 +21,7 @@
 
    ## Usage
 
-   For convience, we recommend you to use IDEA for running both frontend and backend.
+   For convenience, we recommend you to use IDEA for running both frontend and backend.
 
    ## Maintainers And Contributors.
 
