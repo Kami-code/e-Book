@@ -1,6 +1,8 @@
 package com.bookstore.dao;
 
 import com.bookstore.entity.Book;
+import com.bookstore.entity.User;
+import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,4 +18,6 @@ public interface BookDao {
     Book changeName(Long id, String name);
     Book save(Book book);
     void delete(Long id);
+    Page<Book> getBookByPage(int pageIndex, int pageSize);
+    Long count();
 }

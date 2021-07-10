@@ -17,6 +17,8 @@
  */
 package com.bookstore.controller;
 
+import com.bookstore.dto.DataPage;
+import com.bookstore.entity.User;
 import com.bookstore.repository.BookRepository;
 import com.bookstore.entity.Book;
 import com.bookstore.service.BookService;
@@ -79,4 +81,11 @@ public class BookController {
 		return "success";
 	}
 
+
+	@RequestMapping(value = "/book/page/{pageNumber}", method = RequestMethod.GET)
+	public @ResponseBody
+	DataPage<Book> GetBookByNumber(@PathVariable("pageNumber") int pageNumber) throws Exception {
+		DataPage<Book> bookPage = bookService.GetBookPage(pageNumber - 1);
+		return bookPage;
+	}
 }

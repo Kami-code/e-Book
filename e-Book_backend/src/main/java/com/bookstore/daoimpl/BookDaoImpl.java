@@ -2,8 +2,11 @@ package com.bookstore.daoimpl;
 
 import com.bookstore.dao.BookDao;
 import com.bookstore.entity.Book;
+import com.bookstore.entity.User;
 import com.bookstore.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -72,4 +75,14 @@ public class BookDaoImpl implements BookDao {
         bookRepository.deleteBookById(id);
     }
 
+    @Override
+    public Page<Book> getBookByPage(int pageIndex, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageIndex, pageSize);
+        return bookRepository.findAll(pageRequest);
+    }
+
+    @Override
+    public Long count() {
+        return bookRepository.count();
+    }
 }

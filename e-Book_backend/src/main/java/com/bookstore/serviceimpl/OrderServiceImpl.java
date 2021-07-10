@@ -12,6 +12,7 @@ import com.bookstore.entity.Order_item;
 import com.bookstore.entity.Order_master;
 import com.bookstore.entity.User;
 import com.bookstore.service.OrderService;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,12 +31,13 @@ public class OrderServiceImpl implements OrderService {
     private UserDao userDao;
 
     @Override
-    public Order_master addOrder(Long user_id, String books) {
+    public Pair<Order_master, Integer> addOrder(Long user_id, String books) {
         User user = userDao.getUserById(user_id);
         JSONArray cart = JSON.parseArray(books);    //购物车
         int length = cart.size();
         BigDecimal total_price = new BigDecimal(0);
         Order_master order = new Order_master(total_price, 1, user);
+        Integer not_enough_books = 0;
         for (int i = 0; i < length; ++i) {
             JSONObject json_book = cart.getJSONObject(i);
             BigDecimal price = BigDecimal.valueOf(json_book.getDouble("price"));
@@ -49,9 +51,17 @@ public class OrderServiceImpl implements OrderService {
                 Order_item local_order_item = new Order_item(book, number, price, discount, price.multiply(new BigDecimal(number)).subtract(discount), order);  //生成新的订单项
                 order.getOrderItemSet().add(local_order_item);                  //绑定订单项到订单上
             }
+            else {
+                not_enough_books++;
+            }
         }
         order.setPayment(total_price);
-        return orderDao.save(order);
+        if (order.getOrderItemSet().size() == 0) {
+            return new Pair<>(null, not_enough_books);
+        }
+        Order_master result = orderDao.save(order);
+
+        return new Pair<>(result, not_enough_books);
     }
 
     @Override

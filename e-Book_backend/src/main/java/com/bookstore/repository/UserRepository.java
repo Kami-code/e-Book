@@ -2,6 +2,9 @@ package com.bookstore.repository;
 
 import com.bookstore.dto.UserDto;
 import com.bookstore.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +16,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
     public User getUserByUsernameAndPassword(String username, String password);
     public User getUserByUserid(Long n);
     public User getUserByUsername(String n);
+    Iterable<User> findAll(Sort sort);
+    Page<User> findAll(Pageable pageable);
     @Override
     public List<User> findAll();
 }

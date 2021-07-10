@@ -1,9 +1,12 @@
 package com.bookstore.serviceimpl;
 
 import com.bookstore.dao.BookDao;
+import com.bookstore.dto.DataPage;
 import com.bookstore.entity.Book;
+import com.bookstore.entity.User;
 import com.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,5 +57,19 @@ public class BookServiceImpl implements BookService {
     @Override
     public void delete(Long id) {
         bookDao.delete(id);
+    }
+    @Override
+    public DataPage<Book> GetBookPage(int pageNumber) {
+        //查询当前表的所有记录数
+        Long totalRecord = bookDao.count();
+        //调用有参构造函数，创建page对象
+        DataPage<Book> page = new DataPage<Book>(totalRecord.intValue(), pageNumber);
+        //第三步，查询分页列表数据并设置到page对象中
+        if (pageNumber < 0 || page.getPageNumber() > page.getTotalPage()) {
+            return page;
+        }
+        Page<Book> bookPage = bookDao.getBookByPage(pageNumber,page.getPageSize());
+        page.setData(bookPage.toList());
+        return page;
     }
 }

@@ -1,6 +1,8 @@
 package com.bookstore.service;
 
+import com.bookstore.dto.DataPage;
 import com.bookstore.entity.Book;
+import com.bookstore.entity.User;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
@@ -18,4 +20,5 @@ public interface BookService {
     Book changeName(Long id, String name);
     Book addBook(String name, String author, BigDecimal price, int inventory, String description, String type, String image, String isbn);
     void delete(Long id);
+    DataPage<Book> GetBookPage(int pageNumber);
 }

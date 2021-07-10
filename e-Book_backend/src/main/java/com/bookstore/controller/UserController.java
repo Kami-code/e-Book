@@ -17,6 +17,7 @@
  */
 package com.bookstore.controller;
 
+import com.bookstore.dto.DataPage;
 import com.bookstore.dto.UserDto;
 import com.bookstore.repository.UserRepository;
 import com.bookstore.entity.User;
@@ -30,11 +31,12 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@CrossOrigin(origins = "*", maxAge = 3600)
+
 	@RequestMapping(value = "/user/signup", method = RequestMethod.POST)
 	public @ResponseBody
 	SignUpResponse SignUp(@RequestParam("account") String username, @RequestParam("password") String password, @RequestParam("telnum") String telnum, @RequestParam("email") String email) throws Exception {
@@ -49,7 +51,6 @@ public class UserController {
 		return response;
 	}
 
-	@CrossOrigin(origins = "*", maxAge = 3600)
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	public @ResponseBody
 	LogInResponse  LogIn(@RequestParam("account") String username, @RequestParam("password") String password) throws Exception {
@@ -64,7 +65,6 @@ public class UserController {
 		return response;
 	}
 
-	@CrossOrigin(origins = "*", maxAge = 3600)
 	@RequestMapping(value = "/user/get/all", method = RequestMethod.GET)
 	public @ResponseBody
 	List<UserDto> GetAll() throws Exception {
@@ -72,12 +72,18 @@ public class UserController {
 		return userDto;
 	}
 
-	@CrossOrigin(origins = "*", maxAge = 3600)
 	@RequestMapping(value = "/user/{userid}/status", method = RequestMethod.POST)
 	public @ResponseBody
 	UserDto ChangeBlock(@PathVariable("userid") Long userid, @RequestParam("status") int status) throws Exception {
 		UserDto userDto = userService.ChangeBlockedStatus(userid, status);
 		return userDto;
+	}
+
+	@RequestMapping(value = "/user/page/{pageNumber}", method = RequestMethod.GET)
+	public @ResponseBody
+	DataPage<User> GetUserPageByNumber(@PathVariable("pageNumber") int pageNumber) throws Exception {
+		DataPage<User> userPage = userService.GetUserPage(pageNumber - 1);
+		return userPage;
 	}
 
 }

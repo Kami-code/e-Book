@@ -1,6 +1,7 @@
 package com.bookstore.entity;
 
 import com.bookstore.dto.UserDto;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.aspectj.weaver.ast.Or;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -19,8 +20,8 @@ public class Order_master implements Serializable {
     private BigDecimal payment;
     private int method;
 
-    @OneToOne(targetEntity = User.class,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id",referencedColumnName = "user_id")
+    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
+    @JoinColumn(name="user_id")
     private User user;
 
     @OneToMany(mappedBy = "orderMaster", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -69,9 +70,11 @@ public class Order_master implements Serializable {
     public List<Order_item> getOrderItemSet() {
         return orderItemSet;
     }
+    @JsonBackReference
     public User getUser() {
         return user;
     }
+    @JsonBackReference
     public void setUser(User user) {
         this.user = user;
     }

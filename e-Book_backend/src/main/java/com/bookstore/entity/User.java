@@ -3,6 +3,8 @@ package com.bookstore.entity;
 import com.bookstore.dto.UserDto;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name="USER_AUTH")
 @Entity
@@ -20,6 +22,9 @@ public class User {
     @Column(name="user_type")
     private int usertype;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Order_master> orderMasterList = new ArrayList<>();;
+
     public User() {
 
     }
@@ -33,6 +38,12 @@ public class User {
         this.isBlocked = isBlocked;
     }
 
+    public List<Order_master> getOrderMasterList() {
+        return orderMasterList;
+    }
+    public void setOrderMasterList(List<Order_master> orderMasterList) {
+        this.orderMasterList = orderMasterList;
+    }
     public int getIsBlocked() {
         return isBlocked;
     }

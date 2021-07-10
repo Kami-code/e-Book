@@ -5,6 +5,8 @@ import com.bookstore.dto.UserDto;
 import com.bookstore.entity.User;
 import com.bookstore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -66,5 +68,16 @@ public class UserDaoImpl implements UserDao {
         }
         user.setIsBlocked(status);
         return userRepository.save(user).toUserDto();
+    }
+
+    @Override
+    public Page<User> getUserByPage(int pageIndex, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageIndex, pageSize);
+        return userRepository.findAll(pageRequest);
+    }
+
+    @Override
+    public Long count() {
+        return userRepository.count();
     }
 }
