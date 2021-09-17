@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
             throw new Exception("找不到用户！");
         }
         HttpSession session = SessionUtil.getSession();
-        session.setAttribute("user_id", username);
+        session.setAttribute("user_id", userDto.getUserid());
         return userDto;
     }
 

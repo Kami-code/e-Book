@@ -1,8 +1,6 @@
 package com.bookstore.entity;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.*;
 
@@ -10,14 +8,21 @@ import java.util.*;
 @Data
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cart {
-    HashMap<Long, Integer> currentCar = new HashMap<>();
+    private Long user_id;
+    private HashMap<Long, Integer> instance = new HashMap<>();
+    public Cart(long user_id) {
+        this.user_id = user_id;
+    }
+
     public void addBookToCart(long book_id) {
-        if (currentCar.containsKey(book_id)) {
-            currentCar.put(book_id, currentCar.get(book_id) + 1);
+        if (instance.containsKey(book_id)) {
+            instance.put(book_id, instance.get(book_id) + 1);
         }
         else {
-            currentCar.put(book_id, 1);
+            instance.put(book_id, 1);
         }
     }
 }

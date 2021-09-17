@@ -23,7 +23,7 @@ public class Order_item {
     @Column(name = "total_money")
     private BigDecimal totalmoney;
 
-    @OneToOne(targetEntity = Book.class,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = Book.class,cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id",referencedColumnName = "id")
     @NotFound(action= NotFoundAction.IGNORE)
     private Book book;

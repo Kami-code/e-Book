@@ -15,14 +15,13 @@ import javax.servlet.http.HttpSession;
 
 @Service
 public class CartServiceImpl implements CartService {
-    Cart cart = new Cart();
 
     @Override
     public Cart addBooksToCartSession(long bookId) {
         HttpSession session = SessionUtil.getSession();
         Cart cart = (Cart)session.getAttribute("cart");
         if (cart == null) {
-            cart = new Cart();
+            cart = new Cart((Long) session.getAttribute("user_id"));
         }
         System.out.println("the cart in session" + cart.toString());
         cart.addBookToCart(bookId);
@@ -35,7 +34,7 @@ public class CartServiceImpl implements CartService {
         HttpSession session = SessionUtil.getSession();
         Cart cart = (Cart)session.getAttribute("cart");
         if (cart == null) {
-            cart = new Cart();
+            cart = new Cart((Long) session.getAttribute("user_id"));
         }
         return cart;
     }

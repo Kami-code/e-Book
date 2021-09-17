@@ -32,12 +32,12 @@ public class OrderController {
     @Autowired
     WebApplicationContext applicationContext;
 
-    @RequestMapping(value = "/purchase/all", method = RequestMethod.POST)
+    @RequestMapping(value = "/purchase", method = RequestMethod.GET)
     public @ResponseBody
-    PurchaseResponse purchaseAll(@RequestParam("cart_list") String books, @RequestParam("user_id") Long user_id) throws Exception {
+    PurchaseResponse placeOrder() throws Exception {
         PurchaseResponse resp = new PurchaseResponse();
         //Pair<Order_master, Integer> result = orderService.addOrder(user_id, books);
-        orderService.addOrderToConverter(user_id, books);
+        orderService.placeOrder();
         return resp;
 //        if (result.getKey() == null) {
 //            return resp.setFail("购买失败，无可用库存！");
