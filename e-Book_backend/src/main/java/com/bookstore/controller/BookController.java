@@ -39,6 +39,10 @@ public class BookController {
 	public @ResponseBody List<Book> getAllBooks() throws Exception {
 		return bookService.getBooks();
 	}
+	@RequestMapping(value = "/book/{bookid}")
+	public @ResponseBody Book getBookById(@PathVariable("bookid") Long book_id) throws Exception {
+		return bookService.findBookById(book_id);
+	}
 	@RequestMapping(value = "/book/{bookid}/inventory", method = RequestMethod.POST)
 	public @ResponseBody Book changeInventory(@PathVariable("bookid") Long book_id, @RequestParam("inventory") int inventory) throws Exception {
 		return bookService.changeInventory(book_id, inventory);

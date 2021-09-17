@@ -8,10 +8,12 @@ import com.bookstore.dto.UserDto;
 import com.bookstore.dto.DataPage;
 import com.bookstore.entity.User;
 import com.bookstore.service.UserService;
+import com.bookstore.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -25,6 +27,8 @@ public class UserServiceImpl implements UserService {
         if (userDto == null) {
             throw new Exception("找不到用户！");
         }
+        HttpSession session = SessionUtil.getSession();
+        session.setAttribute("user_id", username);
         return userDto;
     }
 

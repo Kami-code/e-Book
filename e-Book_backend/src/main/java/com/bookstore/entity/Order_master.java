@@ -2,6 +2,10 @@ package com.bookstore.entity;
 
 import com.bookstore.dto.UserDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.aspectj.weaver.ast.Or;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -12,6 +16,7 @@ import java.util.*;
 
 @Table(name = "order_master")
 @Entity
+@NoArgsConstructor
 public class Order_master implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -31,9 +36,6 @@ public class Order_master implements Serializable {
     @Column(name = "create_time")
     @CreationTimestamp
     private Date createtime;
-
-    public Order_master() {
-    }
 
     public Order_master(BigDecimal payment, int method, User user) {
         this.payment = payment;

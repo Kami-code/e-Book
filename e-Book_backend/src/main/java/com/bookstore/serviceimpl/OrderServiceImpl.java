@@ -14,7 +14,9 @@ import com.bookstore.entity.User;
 import com.bookstore.service.OrderService;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -29,6 +31,15 @@ public class OrderServiceImpl implements OrderService {
     private BookDao bookDao;
     @Autowired
     private UserDao userDao;
+//    @Autowired
+//    WebApplicationContext applicationContext;
+
+    @Override
+    public boolean addOrderToConverter(Long user_id, String books) {
+//        JmsTemplate jmsTemplate = applicationContext.getBean(JmsTemplate.class);
+//        jmsTemplate.convertAndSend("order", new Pair<Long, String>(user_id, books));
+        return true;
+    }
 
     @Override
     public Pair<Order_master, Integer> addOrder(Long user_id, String books) {

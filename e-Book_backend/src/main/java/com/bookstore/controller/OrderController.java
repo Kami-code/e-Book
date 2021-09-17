@@ -1,14 +1,22 @@
 package com.bookstore.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.bookstore.entity.Book;
+import com.bookstore.entity.Cart;
 import com.bookstore.entity.Order_master;
 import com.bookstore.response.PurchaseResponse;
 import com.bookstore.response.StaticsResponse;
+import com.bookstore.service.CartService;
 import com.bookstore.service.OrderService;
+import com.sun.deploy.net.HttpResponse;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -19,18 +27,40 @@ import java.util.Map;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private CartService cartService;
+    @Autowired
+    WebApplicationContext applicationContext;
 
     @RequestMapping(value = "/purchase/all", method = RequestMethod.POST)
     public @ResponseBody
     PurchaseResponse purchaseAll(@RequestParam("cart_list") String books, @RequestParam("user_id") Long user_id) throws Exception {
         PurchaseResponse resp = new PurchaseResponse();
-        Pair<Order_master, Integer> result = orderService.addOrder(user_id, books);
-        if (result.getKey() == null) {
-            return resp.setFail("购买失败，无可用库存！");
-        }
-        else {
-            return resp.setSuccess(result.getKey(), result.getValue());
-        }
+        //Pair<Order_master, Integer> result = orderService.addOrder(user_id, books);
+        orderService.addOrderToConverter(user_id, books);
+        return resp;
+//        if (result.getKey() == null) {
+//            return resp.setFail("购买失败，无可用库存！");
+//        }
+//        else {
+//            return resp.setSuccess(result.getKey(), result.getValue());
+//        }
+    }
+
+//    @RequestMapping(value = "/car")
+//    public @ResponseBody List<Book> addBookToCar(@PathVariable("bookid") Long book_id) throws Exception {
+//        return bookService.getBooks();
+//    }
+    @RequestMapping(value = "/cart", method = RequestMethod.POST)
+    public @ResponseBody
+    Cart addBookToCar(@RequestParam("book_id") Long book_id) throws Exception {
+        return cartService.addBooksToCartSession(book_id);
+    }
+
+    @RequestMapping(value = "/cart", method = RequestMethod.GET)
+    public @ResponseBody
+    Cart getCart() throws Exception {
+        return cartService.getCart();
     }
 
     @RequestMapping(value = "/order/{int}")

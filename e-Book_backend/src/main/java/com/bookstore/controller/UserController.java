@@ -17,21 +17,35 @@
  */
 package com.bookstore.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.bookstore.dto.DataPage;
 import com.bookstore.dto.UserDto;
+import com.bookstore.entity.Message;
 import com.bookstore.repository.UserRepository;
 import com.bookstore.entity.User;
 import com.bookstore.response.LogInResponse;
 import com.bookstore.response.SignUpResponse;
 import com.bookstore.service.UserService;
+import com.bookstore.util.SessionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+@Scope("session")
 public class UserController {
 	@Autowired
 	private UserService userService;
@@ -54,15 +68,17 @@ public class UserController {
 	@RequestMapping(value = "/user/login", method = RequestMethod.POST)
 	public @ResponseBody
 	LogInResponse  LogIn(@RequestParam("account") String username, @RequestParam("password") String password) throws Exception {
-		LogInResponse response = new LogInResponse();
-		try {
-			UserDto userDto = userService.LogIn(username, password);
-			response.setSuccess(userDto);
-		}
-		catch (Exception e) {
-			response.setFail(e.getMessage());
-		}
-		return response;
+		LogInResponse resp = new LogInResponse();
+		UserDto userDto = userService.LogIn(username, password);
+		resp.setSuccess(userDto);
+		return resp;
+	}
+
+	@RequestMapping(value = "/user/logout", method = RequestMethod.GET)
+	public @ResponseBody
+	Message  LogOut() throws Exception {
+		SessionUtil.removeSession();
+		return new Message(200, "", JSON.parseObject("{}"));
 	}
 
 	@RequestMapping(value = "/user/get/all", method = RequestMethod.GET)

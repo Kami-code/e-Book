@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface OrderService {
+    boolean addOrderToConverter(Long user_id, String books);
     Pair<Order_master, Integer> addOrder(Long user_id, String books);
     List<Order_master> getOrdersByUserId(Long user_id);
     List<Order_master> queryOrders(Date startDate, Date endDate);
