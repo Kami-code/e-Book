@@ -6,6 +6,9 @@ import com.bookstore.entity.Book;
 import com.bookstore.entity.User;
 import com.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,32 +23,39 @@ public class BookServiceImpl implements BookService {
     private BookDao bookDao;
 
     @Override
+    @Cacheable(value = "book", key = "#id")
     public Book findBookById(Long id){
+        System.out.println("执行了查询 id = "+ id);
         return bookDao.findOne(id);
     }
     @Override
-    public List<Book> getBooks() {
-        return bookDao.getBooks();
+    @CachePut(value = "book", key = "#id")
+    public Book changeInventory(Long id, int inventory) {
+        System.out.println("执行了修改库存 id = "+ id);
+        return bookDao.changeInventory(id, inventory);
     }
     @Override
-    public Book changeInventory(Long id, int inventory) {return bookDao.changeInventory(id, inventory); }
-    @Override
+    @CachePut(value = "book", key = "#id")
     public Book changePrice(Long id, BigDecimal price) {
         return bookDao.changePrice(id, price);
     }
     @Override
+    @CachePut(value = "book", key = "#id")
     public Book changeAuthor(Long id, String author) {
         return bookDao.changeAuthor(id, author);
     }
     @Override
+    @CachePut(value = "book", key = "#id")
     public Book changeISBN(Long id, String isbn) {
         return bookDao.changeISBN(id, isbn);
     }
     @Override
+    @CachePut(value = "book", key = "#id")
     public Book changeDescription(Long id, String description) {
         return bookDao.changeDescription(id, description);
     }
     @Override
+    @CachePut(value = "book", key = "#id")
     public Book changeName(Long id, String name) {
         return bookDao.changeName(id, name);
     }
@@ -55,6 +65,7 @@ public class BookServiceImpl implements BookService {
         return bookDao.save(book);
     }
     @Override
+    @CacheEvict(value = "book", key = "#id")
     public void delete(Long id) {
         bookDao.delete(id);
     }
@@ -71,5 +82,9 @@ public class BookServiceImpl implements BookService {
         Page<Book> bookPage = bookDao.getBookByPage(pageNumber,page.getPageSize());
         page.setData(bookPage.toList());
         return page;
+    }
+    @Override
+    public List<Book> getBooks() {
+        return bookDao.getBooks();
     }
 }

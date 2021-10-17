@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.jms.support.converter.MessageConverter;
 
@@ -24,6 +26,8 @@ import javax.jms.ConnectionFactory;
 @EnableWebMvc
 @EnableJms
 @ComponentScan // 作用: 用来扫描相关注解 扫描范围 当前入口类所在的包及子包(com.bookstore及其子包)
+@EnableScheduling
+@EnableCaching
 public class Application {
     @Bean
     public JmsListenerContainerFactory<?> myFactory(@Qualifier("jmsConnectionFactory") ConnectionFactory connectionFactory,

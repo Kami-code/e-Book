@@ -72,6 +72,10 @@ public class Order_master implements Serializable {
     public List<Order_item> getOrderItemSet() {
         return orderItemSet;
     }
+    public void addOrderItem(Order_item orderItem) {
+        orderItemSet.add(orderItem);
+        this.payment = this.payment.add(orderItem.getItemprice());
+    }
     @JsonBackReference
     public User getUser() {
         return user;

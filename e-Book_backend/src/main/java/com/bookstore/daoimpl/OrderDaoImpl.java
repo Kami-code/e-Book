@@ -7,6 +7,9 @@ import com.bookstore.entity.User;
 import com.bookstore.repository.OrderMasterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -18,6 +21,7 @@ public class OrderDaoImpl implements OrderDao {
 
 
     @Override
+    @Transactional(propagation= Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     public Order_master save(Order_master orderMaster) { return orderMasterRepository.save(orderMaster); }
     @Override
     public List<Order_master> getOrder_mastersByUserDto(User user) {

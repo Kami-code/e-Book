@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    @Transactional(propagation= Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     public User getUserById(Long id) {
         return userRepository.getUserByUserid(id);
     }

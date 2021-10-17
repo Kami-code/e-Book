@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -20,6 +23,7 @@ public class BookDaoImpl implements BookDao {
     private BookRepository bookRepository;
 
     @Override
+    @Transactional(propagation= Propagation.REQUIRED, isolation = Isolation.REPEATABLE_READ)
     public Book findOne(Long id){
         return bookRepository.getBookById(id);
     }
@@ -31,6 +35,7 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    @Transactional(propagation= Propagation.REQUIRED, isolation = Isolation.REPEATABLE_READ)
     public Book changeInventory(Long id, int inventory) {
         Book book = findOne(id);
         book.setInventory(max(inventory, 0));

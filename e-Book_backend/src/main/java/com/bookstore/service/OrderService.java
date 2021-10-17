@@ -13,5 +13,5 @@ public interface OrderService {
     List<Order_master> getOrdersByUserId(Long user_id);
     List<Order_master> queryOrders(Date startDate, Date endDate);
     List<Order_master> queryOrdersByUserid(Date startDate, Date endDate, Long userid);
-    void receiveMessage(Cart cart);
+
 }
