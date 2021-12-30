@@ -92,4 +92,17 @@ public class BookController {
 		DataPage<Book> bookPage = bookService.GetBookPage(pageNumber - 1);
 		return bookPage;
 	}
+
+	@RequestMapping(value = "/book/{bookid}/{remarkstring}", method = RequestMethod.GET)
+	public @ResponseBody
+	Book AddRemark(@PathVariable("bookid") Long book_id, @PathVariable("remarkstring") String remark) throws Exception {
+		Book book = bookService.addRemark(book_id, remark);
+		return book;
+	}
+
+	@RequestMapping(value = "/book/relationshipquery/{bookname}", method = RequestMethod.GET)
+	public @ResponseBody
+	List<Book> RelationshipQuery(@PathVariable("bookname") String name) {
+		return bookService.findByTwoRelationship(name);
+	}
 }

@@ -87,4 +87,14 @@ public class BookServiceImpl implements BookService {
     public List<Book> getBooks() {
         return bookDao.getBooks();
     }
+
+    @Override
+    public Book addRemark(Long id, String remark) {
+        return bookDao.addRemark(id, remark);
+    }
+
+    @Override
+    public List<Book> findByTwoRelationship(String bookName) {
+        return bookDao.findByTwoRelationship(bookName);
+    }
 }

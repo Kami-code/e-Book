@@ -42,6 +42,60 @@ public class User {
         this.isBlocked = isBlocked;
     }
 
+    public String getUsername() {return username;}
+
+    public Long getUserid() {
+        return userid;
+    }
+
+    public int getUsertype() {
+        return usertype;
+    }
+
+    public int getIsBlocked() {
+        return isBlocked;
+    }
+
+    public String getTelnum() {
+        return telnum;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setTelnum(String telnum) {
+        this.telnum = telnum;
+    }
+
+    public void setIsBlocked(int isBlocked) {
+        this.isBlocked = isBlocked;
+    }
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
+    }
+
+    public void setUsertype(int usertype) {
+        this.usertype = usertype;
+    }
+
     public UserDto toUserDto() {
         return new UserDto(this);
     }

@@ -2,6 +2,8 @@ package com.bookstore.dao;
 
 import com.bookstore.entity.Book;
 import com.bookstore.entity.User;
+import com.bookstore.node.BookNode;
+import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;
@@ -20,4 +22,6 @@ public interface BookDao {
     void delete(Long id);
     Page<Book> getBookByPage(int pageIndex, int pageSize);
     Long count();
+    Book addRemark(Long id, String remark);
+    List<Book> findByTwoRelationship(String name);
 }

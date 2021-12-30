@@ -5,16 +5,11 @@ import com.bookstore.entity.Book;
 import com.bookstore.entity.Cart;
 import com.bookstore.entity.Order_master;
 import com.bookstore.response.PurchaseResponse;
-import com.bookstore.response.StaticsResponse;
 import com.bookstore.service.CartService;
 import com.bookstore.service.OrderService;
-import com.sun.deploy.net.HttpResponse;
-import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;

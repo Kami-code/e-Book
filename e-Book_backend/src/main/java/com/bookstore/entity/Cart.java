@@ -2,6 +2,7 @@ package com.bookstore.entity;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -10,7 +11,7 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cart {
+public class Cart implements Serializable {
     private Long user_id;
     private HashMap<Long, Integer> instance = new HashMap<>();
     public Cart(long user_id) {

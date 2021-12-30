@@ -21,4 +21,6 @@ public interface BookService {
     Book addBook(String name, String author, BigDecimal price, int inventory, String description, String type, String image, String isbn);
     void delete(Long id);
     DataPage<Book> GetBookPage(int pageNumber);
+    Book addRemark(Long id, String remark);
+    List<Book> findByTwoRelationship(String bookName);
 }

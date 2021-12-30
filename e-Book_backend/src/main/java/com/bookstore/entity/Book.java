@@ -18,6 +18,15 @@ public class Book {
     private String image;
     private String isbn;
 
+    @Transient
+    private Remark remark;
+    public void setRemark(Remark remark) {
+        this.remark = remark;
+    }
+    public Remark getRemark() {
+        return remark;
+    }
+
     public Book(String name, String author, BigDecimal price, int inventory, String description, String type, String image, String isbn) {
         this.name = name;
         this.author = author;
@@ -86,5 +95,6 @@ public class Book {
         this.type = type;
     }
     public void setId(Long i) {id = i;}
+
 }
 

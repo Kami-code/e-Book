@@ -38,6 +38,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
@@ -45,7 +46,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
-@Scope("session")
+//@Scope("session")
 public class UserController {
 	@Autowired
 	private UserService userService;

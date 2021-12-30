@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface BookRepository extends CrudRepository<Book, Long> {
-    public List<Book> findByName(String n);
+    public Book findByName(String n);
     public List<Book> findByAuthor(String a);
     public Book getBookById(Long id);
     @Override
