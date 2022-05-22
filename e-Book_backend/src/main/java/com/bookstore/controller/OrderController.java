@@ -7,7 +7,9 @@ import com.bookstore.entity.Order_master;
 import com.bookstore.response.PurchaseResponse;
 import com.bookstore.service.CartService;
 import com.bookstore.service.OrderService;
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -27,13 +29,12 @@ public class OrderController {
     @Autowired
     WebApplicationContext applicationContext;
 
-    @RequestMapping(value = "/purchase", method = RequestMethod.GET)
+    @RequestMapping(value = "/purchase/{userid}", method = RequestMethod.GET)
     public @ResponseBody
-    PurchaseResponse placeOrder() throws Exception {
+    String placeOrder(@PathVariable("userid") Long user_id) throws Exception {
         PurchaseResponse resp = new PurchaseResponse();
-        //Pair<Order_master, Integer> result = orderService.addOrder(user_id, books);
-        orderService.placeOrder();
-        return resp;
+//        Pair<Order_master, Integer> result = orderService.addOrder(user_id, books);
+        return cartService.placeOrder(user_id);
 //        if (result.getKey() == null) {
 //            return resp.setFail("购买失败，无可用库存！");
 //        }
@@ -46,16 +47,16 @@ public class OrderController {
 //    public @ResponseBody List<Book> addBookToCar(@PathVariable("bookid") Long book_id) throws Exception {
 //        return bookService.getBooks();
 //    }
-    @RequestMapping(value = "/cart", method = RequestMethod.POST)
+    @RequestMapping(value = "/cart/{userid}", method = RequestMethod.POST)
     public @ResponseBody
-    Cart addBookToCar(@RequestParam("book_id") Long book_id) throws Exception {
-        return cartService.addBooksToCartSession(book_id);
+    Cart addBookToCar(@RequestParam("book_id") Long book_id, @PathVariable("userid") Long user_id) throws Exception {
+        return cartService.addBooksToCartSession(book_id, user_id);
     }
 
-    @RequestMapping(value = "/cart", method = RequestMethod.GET)
+    @RequestMapping(value = "/cart/{userid}", method = RequestMethod.GET)
     public @ResponseBody
-    Cart getCart() throws Exception {
-        return cartService.getCart();
+    Cart getCart(@PathVariable("userid") Long user_id) throws Exception {
+        return cartService.getCart(user_id);
     }
 
     @RequestMapping(value = "/order/{int}")

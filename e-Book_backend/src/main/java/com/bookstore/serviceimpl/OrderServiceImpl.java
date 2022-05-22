@@ -34,20 +34,15 @@ public class OrderServiceImpl implements OrderService {
     private OrderDao orderDao;
 
     @Autowired
+    private BookDao bookDao;
+
+    @Autowired
     private UserDao userDao;
     @Autowired
     WebApplicationContext applicationContext;
 
-    @Override
-    public boolean placeOrder() {
-        JmsTemplate jmsTemplate = applicationContext.getBean(JmsTemplate.class);
-        HttpSession session = SessionUtil.getSession();
-        Cart cart = (Cart) session.getAttribute("cart");
-        if (cart == null) { return false; }
-        jmsTemplate.convertAndSend("order", cart);
-        session.removeAttribute("cart");
-        return true;
-    }
+
+
 
     @Override
     public List<Order_master> getOrdersByUserId(Long user_id) {

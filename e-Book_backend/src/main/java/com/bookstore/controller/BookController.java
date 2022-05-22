@@ -23,6 +23,7 @@ import com.bookstore.repository.BookRepository;
 import com.bookstore.entity.Book;
 import com.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -99,10 +100,12 @@ public class BookController {
 		Book book = bookService.addRemark(book_id, remark);
 		return book;
 	}
-
+	@Scope("prototype")
 	@RequestMapping(value = "/book/relationshipquery/{bookname}", method = RequestMethod.GET)
 	public @ResponseBody
 	List<Book> RelationshipQuery(@PathVariable("bookname") String name) {
 		return bookService.findByTwoRelationship(name);
 	}
 }
+
+

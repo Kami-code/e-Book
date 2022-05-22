@@ -39,14 +39,14 @@ public class BookDaoImpl implements BookDao {
     @Transactional(propagation= Propagation.REQUIRED, isolation = Isolation.REPEATABLE_READ)
     public Book findOne(Long id){
         Book book = bookRepository.getBookById(id);
-        Optional<Remark> remark = remarkRepository.findById(id);
-        if (remark.isPresent()){
+//        Optional<Remark> remark = remarkRepository.findById(id);
+//        if (remark.isPresent()){
 //            System.out.println("Not Null " + id);
-            book.setRemark(remark.get());
-        }
-        else{
+//            book.setRemark(remark.get());
+//        }
+//        else{
 //            System.out.println("It's Null");
-        }
+//        }
         return book;
     }
 
